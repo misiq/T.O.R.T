@@ -10,7 +10,18 @@
     "newArchEnabled": true,
     "ios": {
       "bundleIdentifier": "com.misqz.tort",
-      "supportsTablet": true
+      "supportsTablet": true,
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false,
+        "UIStatusBarHidden": true,
+        "UIViewControllerBasedStatusBarAppearance": false
+      },
+      "splash": {
+        "image": "./assets/images/home-screen.jpg",
+        "resizeMode": "cover",
+        "backgroundColor": "#E8A55A"
+      },
+      
     },
     "android": {
       "adaptiveIcon": {
@@ -20,7 +31,12 @@
         "monochromeImage": "./assets/images/android-icon-monochrome.png"
       },
       "edgeToEdgeEnabled": true,
-      "predictiveBackGestureEnabled": false
+      "predictiveBackGestureEnabled": false,
+      "permissions": [
+        "android.permission.RECORD_AUDIO",
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "package": "com.misqz.tort"
     },
     "web": {
       "output": "static",
@@ -33,7 +49,17 @@
         {
           "image": "./assets/images/home-screen.jpg",
           "resizeMode": "cover",
-          "backgroundColor": "#E8A55A"
+          "backgroundColor": "#E8A55A",
+          "imageWidth": 200,
+          "ios": {
+            "image": "./assets/images/home-screen.jpg",
+            "resizeMode": "cover",
+            "backgroundColor": "#E8A55A",
+            "dark": {
+              "image": "./assets/images/home-screen.jpg",
+              "backgroundColor": "#E8A55A"
+            }
+          }
         }
       ],
       [
