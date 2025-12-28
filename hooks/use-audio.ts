@@ -1,41 +1,36 @@
-import { Audio } from 'expo-av';
-import { useEffect, useRef } from "react";
+import { AudioModule, useAudioPlayer } from 'expo-audio';
+import { useEffect } from 'react';
 
+const backgroundMusic = require('@/assets/audio/background-1.mp3');
 
 export function useBackgroundMusic() {
-    const soundRef = useRef<Audio.Sound | null>(null)
+    const player = useAudioPlayer(backgroundMusic);
 
-    useEffect(() => {
-        Audio.setAudioModeAsync({
-            playsInSilentModeIOS: true,        // Gra nawet w trybie cichym
-            staysActiveInBackground: false,    // Czy grać w tle
-            shouldDuckAndroid: true,           // Ścisza inne aplikacje na Android
-        });
-
-        // Cleanup
-        return () => {
-            soundRef.current?.unloadAsync();
-        };
-    }, []);
+        // Konfiguracja audio dla iOS - graj w silent mode
+        useEffect(() => {
+            AudioModule.setAudioModeAsync({
+                playsInSilentMode: true,  // 🔑 Kluczowe dla iOS
+            });
+        }, []);
     
-    const playMusic = async () => {
-        if(soundRef.current){
-            await soundRef.current.playAsync()
-            return
+
+    const playMusic = () => {
+        player.loop = true;
+        player.volume = 0.5;
+        player.play();
+    };
+
+    const pauseMusic = () => {
+        player.pause();
+    };
+
+    const toggleMusic = () => {
+        if (player.playing) {
+            player.pause();
+        } else {
+            player.play();
         }
+    };
 
-        const {sound} = await Audio.Sound.createAsync(
-            require('@/assets/audio/background-1.mp3'),
-            {isLooping: true, 
-                volume: 0.5
-            }
-        )
-
-        soundRef.current = sound;
-        await sound.playAsync();
-    }
-
-
-    return { playMusic };
-
+    return { playMusic, pauseMusic, toggleMusic, isPlaying: player.playing };
 }

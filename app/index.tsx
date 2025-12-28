@@ -1,12 +1,14 @@
 import { useBackgroundMusic } from '@/hooks/use-audio';
-import { LinearGradient } from '@tamagui/linear-gradient';
+import { Image } from 'expo-image';
 import { useRouter } from 'expo-router';
 import { useEffect } from 'react';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { StyleSheet, View } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Button, Text, YStack } from 'tamagui';
 
 export default function StartScreen() {
   const router = useRouter();
+  const insets = useSafeAreaInsets();
 
   const { playMusic } = useBackgroundMusic();
 
@@ -14,54 +16,58 @@ export default function StartScreen() {
     playMusic()
   }, [])
 
-
   return (
-    <LinearGradient
-      colors={['#FFF5E6', '#FFE4CC', '#FFDAB3']}
-      style={{ flex: 1 }}
-    >
-      <SafeAreaView style={{ flex: 1 }}>
-        <YStack flex={1} alignItems="center" justifyContent="center" gap="$6" padding="$4">
-          {/* Logo/Tytuł */}
-          <Text fontSize={60}>🎂</Text>
-          <Text 
-            fontSize={42} 
-            fontWeight="bold" 
-            color="#8B4513"
-            textAlign="center"
+    <View style={styles.container}>
+      {/* Full screen background image */}
+      <Image
+        source={require('@/assets/images/home-screen.jpg')}
+        style={StyleSheet.absoluteFillObject}
+        contentFit="cover"
+      />
+      
+      {/* Buttons at the bottom */}
+      <YStack 
+        flex={1} 
+        justifyContent="flex-end" 
+        padding="$4"
+        paddingBottom={insets.bottom + 40}
+      >
+        <YStack gap="$3" width="100%" alignItems="center">
+          <Button
+            size="$5"
+            width={280}
+            backgroundColor="rgba(139, 69, 19, 0.9)"
+            pressStyle={{ backgroundColor: 'rgba(160, 82, 45, 0.95)' }}
+            borderWidth={3}
+            borderColor="#2D1810"
+            onPress={() => router.push('/game')}
           >
-            Tort Clicker
-          </Text>
-          <Text fontSize={18} color="#A0522D" textAlign="center">
-            Zbuduj swoje cukiernicze imperium!
-          </Text>
-
-          {/* Przyciski */}
-          <YStack gap="$3" width="100%" maxWidth={280} marginTop="$8">
-            <Button
-              size="$5"
-              backgroundColor="#D2691E"
-              pressStyle={{ backgroundColor: '#A0522D' }}
-              onPress={() => router.push('/game')}
-            >
-              <Text color="white" fontWeight="bold" fontSize={18}>
-                🍰 Nowa Gra
-              </Text>
-            </Button>
-            
-            <Button
-              size="$5"
-              backgroundColor="#CD853F"
-              pressStyle={{ backgroundColor: '#8B4513' }}
-              onPress={() => router.push('/game')}
-            >
-              <Text color="white" fontWeight="bold" fontSize={18}>
-                ▶️ Kontynuuj
-              </Text>
-            </Button>
-          </YStack>
+            <Text color="white" fontWeight="bold" fontSize={20} fontFamily="Jersey10">
+              🍰 NOWA GRA
+            </Text>
+          </Button>
+          
+          <Button
+            size="$5"
+            width={280}
+            backgroundColor="rgba(205, 133, 63, 0.9)"
+            pressStyle={{ backgroundColor: 'rgba(139, 69, 19, 0.95)' }}
+            borderWidth={3}
+            borderColor="#2D1810"
+            onPress={() => router.push('/game')}
+          >
+            <Text color="white" fontWeight="bold" fontSize={20} fontFamily="Jersey10">
+              ▶️ KONTYNUUJ
+            </Text>
+          </Button>
         </YStack>
-      </SafeAreaView>
-    </LinearGradient>
+      </YStack>
+    </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+});
