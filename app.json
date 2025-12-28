@@ -9,6 +9,7 @@
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
+      "bundleIdentifier": "com.misqz.tort",
       "supportsTablet": true
     },
     "android": {
@@ -43,6 +44,13 @@
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
-    }
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "92ef3234-1a2f-4d45-b062-329bb9fc9224"
+      }
+    },
+    "owner": "misiq"
   }
 }
